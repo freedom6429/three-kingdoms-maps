@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>第十五回　太史慈酣鬥小霸王　孫伯符大戰嚴白虎｜三國演義故事地圖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#D9E2DC; --land:#E9EDE3; --land2:#DCE3D3; --water:#9FC2CF; --river:#6FA3B8; --sea-text:#4E7F93;
+  --ink:#20302B; --soft:#5E6B66; --faint:#8E9993; --route:#A8352A; --route-soft:rgba(168,53,42,.28);
+  --enemy:#3F5D86; --ally:#4B7A4E; --panel:#F6F8F4; --line:rgba(32,48,43,.14); --focus:#2F5D8A; --halo:#EEF2EA;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#15201F; --land:#26332F; --land2:#2C3A35; --water:#1D3B48; --river:#4F8BA3; --sea-text:#7FB2C6;
+  --ink:#E4EBE7; --soft:#A9B6B0; --faint:#6F7D77; --route:#E57B69; --route-soft:rgba(229,123,105,.3);
+  --enemy:#8EAAD6; --ally:#8CC08F; --panel:#1E2A28; --line:rgba(228,235,231,.14); --focus:#9CC3EA; --halo:#26332F;}}
+:root[data-theme="dark"]{
+  --bg:#15201F; --land:#26332F; --land2:#2C3A35; --water:#1D3B48; --river:#4F8BA3; --sea-text:#7FB2C6;
+  --ink:#E4EBE7; --soft:#A9B6B0; --faint:#6F7D77; --route:#E57B69; --route-soft:rgba(229,123,105,.3);
+  --enemy:#8EAAD6; --ally:#8CC08F; --panel:#1E2A28; --line:rgba(228,235,231,.14); --focus:#9CC3EA; --halo:#26332F;}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;background:var(--bg)}
+body{height:100%;margin:0;font-family:var(--sans);color:var(--ink);background:var(--bg);overflow:hidden}
+#app{height:100%;display:flex;flex-direction:column}
+@media (min-width:900px){#app{flex-direction:row}}
+#mapWrap{position:relative;flex:1 1 55%;min-height:0}
+svg#map{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+#title{position:absolute;left:12px;top:12px;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 12px 7px;opacity:.94}
+#title h1{margin:0;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:.08em}
+#title p{margin:1px 0 0;font-size:12px;color:var(--soft)}
+#title .home{pointer-events:auto;display:inline-block;margin-top:4px;font-size:13px;color:var(--route);font-weight:600}
+#title .home:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+#allBtn{position:absolute;right:12px;top:12px;height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);font:600 13px var(--sans);cursor:pointer}
+#allBtn:focus-visible,.nav button:focus-visible,.dots button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+#panel{flex:0 0 auto;max-height:48%;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line)}
+@media (min-width:900px){#panel{flex:0 0 400px;max-height:none;border-top:0;border-left:1px solid var(--line)}}
+.dots{display:flex;gap:4px;padding:10px 14px 0;flex-wrap:wrap}
+.dots button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--soft);
+  font:600 11px var(--sans);cursor:pointer;padding:0}
+.dots button.done{background:var(--route-soft);color:var(--ink);border-color:transparent}
+.dots button.cur{background:var(--route);color:#fff;border-color:transparent}
+#card{flex:1 1 auto;overflow-y:auto;padding:10px 18px 12px}
+#card .num{font-size:12px;color:var(--soft);margin:0}
+#card h2{font-family:var(--serif);font-weight:900;font-size:24px;margin:2px 0 2px;letter-spacing:.05em}
+#card .where{margin:0 0 10px;font-size:14px;color:var(--soft)}
+#card .where b{font-family:var(--serif);color:var(--ink);font-size:15px}
+#card dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 12px}
+#card dt{font-size:13px;font-weight:700;color:var(--route);padding-top:2px;white-space:nowrap}
+#card dd{margin:0;font-size:15px;line-height:1.75}
+#card .ppl{display:flex;flex-wrap:wrap;gap:6px}
+#card .p{font-size:13px;padding:1px 9px;border-radius:10px;border:1px solid var(--line)}
+#card .p.a{color:var(--ally);border-color:currentColor}
+#card .p.e{color:var(--enemy);border-color:currentColor}
+#card .aside{margin:12px 0 0;font-size:13px;color:var(--soft);line-height:1.7}
+.nav{display:flex;gap:10px;padding:10px 14px 12px;border-top:1px solid var(--line)}
+.nav button{flex:1;height:44px;border-radius:12px;border:1px solid var(--line);background:none;color:var(--ink);
+  font:600 15px var(--sans);cursor:pointer}
+.nav button.primary{background:var(--route);color:#fff;border-color:transparent}
+.nav button:disabled{opacity:.35;cursor:default}
+
+/* 地圖元素 */
+.sea{fill:var(--water)} .landbg{fill:var(--land)}
+.riv{fill:none;stroke:var(--river);stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.lake{fill:var(--water);stroke:var(--river);vector-effect:non-scaling-stroke;stroke-width:.8}
+.wlabel{fill:var(--sea-text);font-family:var(--serif);font-size:calc(13px*var(--k));letter-spacing:.3em}
+.region{fill:var(--faint);font-family:var(--serif);font-weight:700;font-size:calc(17px*var(--k));letter-spacing:.6em;opacity:.7}
+.plabel{font-family:var(--serif);font-weight:700;fill:var(--ink);font-size:calc(14px*var(--k));paint-order:stroke;
+  stroke:var(--land);stroke-width:calc(4px*var(--k));stroke-linejoin:round}
+.plabel.ctx{font-weight:500;fill:var(--soft);font-size:calc(12px*var(--k))}
+.plabel.on{fill:var(--route);font-size:calc(17px*var(--k))}
+.pnow{fill:var(--soft);font-size:calc(10.5px*var(--k));font-family:var(--sans);paint-order:stroke;stroke:var(--land);stroke-width:calc(3px*var(--k))}
+.dot{fill:var(--panel);stroke:var(--ink);vector-effect:non-scaling-stroke;stroke-width:1.5}
+.dot.ctx{fill:var(--faint);stroke:none}
+.dot.visited{fill:var(--route);stroke:var(--panel)}
+.halo{fill:none;stroke:var(--route);vector-effect:non-scaling-stroke;stroke-width:2}
+.route{fill:none;stroke:var(--route);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.route.past{stroke:var(--route-soft)}
+.side{fill:none;stroke-width:2;stroke-dasharray:6 5;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.side.flee{stroke:var(--enemy)} .side.ally{stroke:var(--ally)} .side.msg{stroke:var(--soft);stroke-dasharray:2 5}
+.slabel{font-size:calc(11.5px*var(--k));font-family:var(--sans);paint-order:stroke;stroke:var(--land);stroke-width:calc(3px*var(--k))}
+.slabel.flee{fill:var(--enemy)} .slabel.ally{fill:var(--ally)} .slabel.msg{fill:var(--soft)}
+.hit{fill:transparent;cursor:pointer}
+@media (prefers-reduced-motion: reduce){.halo{display:none}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="mapWrap">
+    <svg id="map" role="img" aria-label="孫策平定江東路線圖"></svg>
+    <div id="title"><h1>孫策平定江東</h1><p>第十五回　太史慈酣鬥小霸王　孫伯符大戰嚴白虎</p><a class="home" href="./">回目錄</a></div>
+    <button id="allBtn" type="button">看全圖</button>
+  </div>
+  <div id="panel">
+    <div class="dots" id="dots" role="tablist" aria-label="情節步驟"></div>
+    <div id="card" aria-live="polite"></div>
+    <div class="nav"><button id="prev" type="button">上一站</button><button id="next" type="button" class="primary">下一站</button></div>
+  </div>
+</div>
+<script>
+"use strict";
+/* ---------- 地點 ---------- */
+const PL={
+ shouchun:{n:"壽春",lon:116.78,lat:32.57,now:"安徽壽縣",ax:"r"},
+ liyang:{n:"歷陽",lon:118.35,lat:31.72,now:"安徽和縣",ax:"l"},
+ niuzhu:{n:"牛渚",lon:118.48,lat:31.6,now:"安徽馬鞍山采石磯",ax:"b"},
+ shenting:{n:"神亭嶺",lon:119.35,lat:31.78,now:"江蘇句容、金壇之間（說法不一）",ax:"b"},
+ qua:{n:"曲阿",lon:119.58,lat:32.0,now:"江蘇丹陽",ax:"r"},
+ moling:{n:"秣陵",lon:118.78,lat:32.05,now:"江蘇南京",ax:"t"},
+ jingxian:{n:"涇縣",lon:118.4,lat:30.7,now:"安徽涇縣",ax:"l"},
+ xuancheng:{n:"宣城",lon:118.75,lat:30.95,now:"安徽宣城一帶",ax:"r"},
+ wu:{n:"吳",lon:120.6,lat:31.3,now:"江蘇蘇州",ax:"r"},
+ kuaiji:{n:"會稽",lon:120.58,lat:30.0,now:"浙江紹興",ax:"r"},
+ zhadu:{n:"查瀆",lon:120.3,lat:29.82,now:"浙江紹興西南一帶（確切位置不詳）",ax:"b"}
+};
+const CTX=[["合肥",117.27,31.86],["京口",119.43,32.2],["毗陵",119.95,31.78],["由拳",120.75,30.75],["錢唐",120.15,30.25],["豫章",115.9,28.68],["廣陵",119.42,32.4],["柴桑",115.99,29.7]];
+
+/* ---------- 情節 ---------- */
+const STEPS=[
+ {at:"shouchun",title:"借兵起家",from:null,
+  who:[["孫策","a"],["袁術","e"]],
+  what:"孫策寄住在袁術手下，想回江東重建父親孫堅的基業。他把父親留下的傳國玉璽押給袁術，借到三千兵、五百匹馬。",
+  result:"袁術收下玉璽，封孫策官職，讓他帶兵南下。",aside:"這顆玉璽，就是本回最後袁術賴著不還的伏筆。"},
+ {at:"liyang",title:"好友會合",from:[[117.3,31.95]],
+  who:[["孫策","a"],["周瑜","a"],["張昭","a"]],
+  what:"孫策行軍到歷陽，遇到從小的好友周瑜帶兵前來。周瑜又推薦了隱居江東的賢士張昭、張紘。",
+  result:"孫策的隊伍有了謀士，準備渡過長江。",aside:"上一集就停在這裡。"},
+ {at:"niuzhu",title:"渡江第一勝",from:[],
+  who:[["孫策","a"],["黃蓋","a"],["蔣欽","a"],["周泰","a"],["張英（劉繇部將）","e"]],
+  what:"揚州刺史劉繇派部將張英守牛渚，囤糧十萬。孫策渡江進攻，黃蓋出戰。打到一半，張英營寨後方起火，原來是蔣欽、周泰帶著三百多人來投靠孫策，順手放了一把火。",
+  result:"張英丟下牛渚逃走。孫策得到十萬糧食、大批兵器和四千多名降兵。",aside:""},
+ {at:"shenting",title:"神亭嶺大戰",from:[[118.95,31.72]],
+  who:[["孫策","a"],["程普","a"],["黃蓋","a"],["韓當","a"],["太史慈","e"],["劉繇","e"]],
+  what:"孫策只帶十三騎上嶺拜漢光武廟，順道偵查劉繇營寨。劉繇判斷是誘敵計，下令不准追，太史慈卻違令獨自追來。兩人先戰五十回合，太史慈假裝敗走把孫策引開，再戰五十回合，雙雙摔下馬，孫策搶走太史慈的短戟，太史慈搶走孫策的頭盔。",
+  result:"雙方援軍趕到，黃昏遇上狂風暴雨，各自收兵，不分勝負。",aside:"第二天兩軍對陣，孫策把短戟挑在槍上，太史慈把頭盔挑在槍上，互相叫陣。"},
+ {at:"qua",title:"老巢被抄",from:[],
+  sides:[{kind:"flee",pts:[[119.35,31.78],[118.9,31.2],[118.4,30.7]],label:"太史慈逃往涇縣",at:[118.72,31.2]}],
+  who:[["周瑜","a"],["張昭","a"],["劉繇","e"],["太史慈","e"]],
+  what:"兩軍正在神亭嶺前對陣，劉繇突然接到消息：周瑜已經繞到後方，偷襲拿下曲阿，也就是劉繇的根據地。劉繇只好收兵撤退。當晚孫策採用張昭的計策，兵分五路劫營。",
+  result:"劉繇大敗，四散潰逃。太史慈獨力難支，帶著十幾個人逃往涇縣。",aside:"地圖上的紅線是周瑜這支奇兵的路線。"},
+ {at:"niuzhu",title:"小霸王",from:[[119.35,31.78],[118.95,31.72]],
+  sides:[{kind:"flee",pts:[[118.48,31.6],[117.6,30.6],[116.5,29.7],[115.9,28.68]],label:"劉繇逃往豫章，投靠劉表",at:[116.3,29.45]}],
+  who:[["孫策","a"],["于糜（劉繇部將）","e"],["樊能（劉繇部將）","e"],["劉繇","e"]],
+  what:"劉繇收集殘兵，想奪回牛渚。孫策親自迎戰，不到三回合就把一員部將活捉過來夾在腋下；另一員部將從背後偷襲，被孫策回頭大喝一聲，嚇得摔下馬死了。回到陣前，腋下那員部將也已經被夾死。",
+  result:"人們從此叫孫策「小霸王」。劉繇大半人馬投降，他本人逃往豫章，投靠荊州的劉表。",aside:"「霸王」指西楚霸王項羽。"},
+ {at:"moling",title:"詐死誘敵",from:[],
+  who:[["孫策","a"],["薛禮（守將）","e"]],
+  what:"孫策攻打秣陵，親自到城邊勸降，被城上冷箭射中左腿，摔下馬來。孫策將計就計，下令全軍假裝為他發喪。守軍以為孫策死了，連夜出城追擊。",
+  result:"伏兵四起，孫策衝在最前面大喊「孫郎在此」，追兵紛紛投降。孫策下令一個都不殺，拿下秣陵。",aside:"秣陵就是後來的建業，也就是今天的南京。"},
+ {at:"jingxian",title:"立竿候影",from:[[118.6,31.3]],
+  who:[["孫策","a"],["周瑜","a"],["陳武","a"],["太史慈","e"]],
+  what:"太史慈在涇縣招募了兩千多人。孫策和周瑜三面圍城，故意留下東門，再派陳武爬上城牆放火。太史慈從東門逃出，跑了幾十里，在蘆葦叢中被絆馬索絆倒活捉。",
+  result:"孫策親手替太史慈鬆綁，太史慈歸降。他請求去收攏劉繇的散兵，孫策約他隔天正午回來。隔天日影剛到正午，太史慈果然帶著一千多人回來。",aside:"孫策在營門立竹竿看日影計時，所以叫「立竿候影」。"},
+ {at:"qua",title:"孫郎來了",from:[[118.9,31.35],[119.3,31.75]],
+  sides:[{kind:"ally",pts:[[119.58,32.0],[119.1,31.4],[118.75,30.95]],label:"孫權、周泰守宣城",at:[119.05,31.3]}],
+  who:[["孫策","a"],["孫權","a"],["周泰","a"]],
+  what:"孫策的軍隊紀律嚴明，不准搶劫、不准騷擾百姓，連雞狗都不驚動。願意當兵的收編，不願意的發錢讓他們回家。百姓紛紛帶著酒肉來慰勞。",
+  result:"孫策把母親、叔叔和弟弟們接到曲阿團聚，派弟弟孫權和周泰去守宣城。",aside:""},
+ {at:"wu",title:"神射一箭",from:[[119.95,31.78],[120.3,31.57]],
+  sides:[{kind:"flee",pts:[[120.6,31.3],[120.75,30.75],[120.3,30.3],[120.58,30.0]],label:"嚴白虎逃往會稽",at:[120.95,30.55]}],
+  who:[["孫策","a"],["太史慈","a"],["嚴白虎","e"],["嚴輿","e"]],
+  what:"自稱「東吳德王」的嚴白虎佔據吳郡。孫策在城西楓橋擊敗他的弟弟嚴輿，包圍吳城。城上一員副將扶著欄杆叫罵，太史慈一箭射穿他的左手，把手釘在城樓橫梁上。嚴白虎嚇壞了，派嚴輿出城求和。",
+  result:"嚴輿說要和孫策「平分江東」，孫策大怒，當場殺了他。嚴白虎棄城逃往會稽。",aside:""},
+ {at:"kuaiji",title:"王朗據守",from:[[120.75,30.75],[120.3,30.3]],
+  who:[["孫策","a"],["周瑜","a"],["程普","a"],["王朗","e"],["嚴白虎","e"]],
+  what:"孫策渡過錢塘江南下。會稽太守王朗收留嚴白虎，不聽賢士勸告，出兵在野外迎戰。混戰中周瑜、程普從背後殺出，前後夾擊。",
+  result:"王朗退回城裡，拉起吊橋，挖深溝、築高牆，打算堅守到孫策糧盡自退。",aside:"這一段的「渡江」渡的是錢塘江，不是長江。"},
+ {at:"zhadu",title:"出其不意",from:[],
+  sides:[{kind:"flee",pts:[[120.3,29.82],[120.9,29.9],[121.5,29.95]],label:"王朗逃往海邊",at:[121.0,29.75]}],
+  who:[["孫策","a"],["孫靜（孫策叔父）","a"],["王朗","e"],["嚴白虎","e"]],
+  what:"孫策的叔父孫靜獻計：會稽的糧食大半囤在幾十里外的查瀆，應該去攻打那裡，「攻其無備，出其不意」。孫策在各城門點起火把、插滿旗子當疑兵，連夜撤圍奔向查瀆。嚴白虎帶五千兵追來，在密林中中了埋伏。",
+  result:"嚴白虎大敗逃走，王朗不敢回城，逃往海邊。孫策拿下會稽。不久有人帶著嚴白虎的首級來投降。",aside:"查瀆的確切位置已不可考，地圖上是大約位置。"},
+ {at:"xuancheng",title:"周泰護主",from:null,
+  who:[["孫權","a"],["周泰","a"],["山賊","e"],["虞翻","a"],["華佗","a"]],
+  what:"孫策平定東邊回軍時，傳來消息：山賊半夜偷襲宣城。周泰把孫權抱上馬，自己光著上身徒步拚殺，奪下賊人的槍和馬，殺出一條血路救出孫權，但全身中了十二槍。",
+  result:"曾勸王朗的賢士虞翻被孫策請來，並引薦神醫華佗。華佗下藥，一個月後周泰痊癒。",aside:"這一站孫策本人不在場，所以路線沒有延伸到宣城。"},
+ {at:"shouchun",title:"討還玉璽",from:null,
+  sides:[{kind:"msg",pts:[[120.6,31.3],[119.58,32.0],[118.2,32.2],[116.78,32.57]],label:"孫策派使者討玉璽",at:[118.5,32.35]}],
+  who:[["孫策","a"],["袁術","e"]],
+  what:"江南全部平定後，孫策派人向袁術討回當初抵押的傳國玉璽。袁術這時已經暗中想當皇帝，找藉口不還。",
+  result:"袁術認為孫策佔著長江天險不好惹，決定先去攻打徐州的劉備。故事轉向下一回。",aside:""}
+];
+
+/* ---------- 投影與繪製 ---------- */
+const KX=0.86,LON0=115.3,LAT0=33.2,S=100;
+const X=lon=>(lon-LON0)*KX*S, Y=lat=>(LAT0-lat)*S;
+const W=(122.1-LON0)*KX*S, H=(LAT0-28.4)*S;
+const NS="http://www.w3.org/2000/svg";
+const svg=document.getElementById("map");
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e}
+const pts=a=>a.map(p=>X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join(" ");
+function smooth(a){ // Catmull-Rom 轉貝茲曲線
+ const p=a.map(q=>[X(q[0]),Y(q[1])]);if(p.length<3)return "M"+p.map(q=>q.join(",")).join("L");
+ let d="M"+p[0].join(",");for(let i=0;i<p.length-1;i++){const p0=p[i-1]||p[i],p1=p[i],p2=p[i+1],p3=p[i+2]||p2;
+  d+=`C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`}return d}
+
+const SEA=[[120.55,33.3],[120.9,32.9],[121.25,32.45],[121.85,31.72],[121.92,31.15],[121.35,30.78],[120.95,30.58],[120.55,30.4],[120.95,30.28],[121.35,30.18],[121.65,30.0],[121.95,29.85],[121.9,29.4],[122.2,28.3],[122.3,28.3],[122.3,33.3]];
+const RIV={
+ "長江":{w:5,p:[[115.3,29.85],[116.0,29.75],[116.6,30.05],[117.05,30.5],[117.8,30.95],[118.35,31.35],[118.5,31.7],[118.78,32.1],[119.45,32.22],[120.3,31.95],[120.85,31.95],[121.4,31.75],[121.85,31.72]]},
+ "錢塘江":{w:3,p:[[118.9,29.1],[119.45,29.45],[119.95,30.05],[120.2,30.2],[120.55,30.4]]},
+ "淮河":{w:2.5,p:[[115.3,32.5],[116.0,32.5],[116.8,32.8],[117.8,33.2],[118.1,33.3]]},
+ "贛江":{w:2,p:[[115.6,28.4],[115.9,28.7],[116.1,29.1]]},
+ "青弋江":{w:1.4,p:[[118.2,30.4],[118.4,30.7],[118.35,31.3]]}
+};
+const LAKES=[["太湖",120.2,31.2,0.3,0.28],["巢湖",117.55,31.6,0.22,0.13],["彭蠡澤",116.25,29.3,0.25,0.42]];
+
+function drawBase(){
+ el("rect",{x:-600,y:-600,width:W+1200,height:H+1200,class:"landbg"});
+ const sea=[...SEA.map(p=>p),[122.3,33.3]];
+ el("polygon",{points:pts([[122.3,40],[120.55,40],...SEA,[122.3,20]]),class:"sea"});
+ for(const n in RIV)el("path",{d:smooth(RIV[n].p),class:"riv","stroke-width":RIV[n].w});
+ for(const l of LAKES){el("ellipse",{cx:X(l[1]),cy:Y(l[2]),rx:l[3]*KX*S,ry:l[4]*S,class:"lake"})}
+ const wl=(t,lon,lat,rot)=>{const e=el("text",{x:X(lon),y:Y(lat),class:"wlabel","text-anchor":"middle",transform:rot?`rotate(${rot} ${X(lon)} ${Y(lat)})`:""});e.textContent=t};
+ wl("長江",117.45,30.62,38);wl("錢塘江",119.6,29.6,38);wl("淮河",116.4,32.8,12);wl("太湖",120.2,31.22);wl("巢湖",117.55,31.45);wl("彭蠡澤",116.25,29.7);
+ wl("東海",121.7,29.1);wl("黃海",121.7,32.9);
+ const rg=(t,lon,lat)=>{const e=el("text",{x:X(lon),y:Y(lat),class:"region","text-anchor":"middle"});e.textContent=t};
+ rg("江北",117.3,32.35);rg("江東",119.4,30.6);
+}
+drawBase();
+const sideLayer=el("g",{}),routeLayer=el("g",{}),dotLayer=el("g",{}),labelLayer=el("g",{});
+const routePast=el("path",{class:"route past"},routeLayer),routeCur=el("path",{class:"route"},routeLayer);
+const halo=el("circle",{class:"halo",r:10},dotLayer);
+
+// 背景小地名
+const ctxDots=[];
+for(const c of CTX){const d=el("circle",{cx:X(c[1]),cy:Y(c[2]),r:2.5,class:"dot ctx"},dotLayer);ctxDots.push(d);
+ const t=el("text",{x:X(c[1])+6,y:Y(c[2])+4,class:"plabel ctx"},labelLayer);t.textContent=c[0]}
+// 情節地點
+for(const id in PL){const p=PL[id],x=X(p.lon),y=Y(p.lat);
+ p.dot=el("circle",{cx:x,cy:y,r:5,class:"dot"},dotLayer);
+ const pos={r:[9,5,"start"],l:[-9,5,"end"],t:[0,-11,"middle"],b:[0,20,"middle"]}[p.ax];
+ p.label=el("text",{x:x+pos[0],y:y+pos[1],"text-anchor":pos[2],class:"plabel"},labelLayer);p.label.textContent=p.n;
+ const hit=el("circle",{cx:x,cy:y,r:16,class:"hit",tabindex:"0",role:"button","aria-label":p.n},labelLayer);
+ const go=()=>{const idx=findStep(id);if(idx>=0)show(idx)};
+ hit.addEventListener("click",go);hit.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}});
+}
+function findStep(id){ // 點地點：先找目前之後最近的一站，找不到再往前找
+ for(let i=cur+1;i<STEPS.length;i++)if(STEPS[i].at===id)return i;
+ for(let i=cur;i>=0;i--)if(STEPS[i].at===id)return i;return -1}
+
+/* 每一站的完整路段：前一個孫策所在地 → 中繼點 → 本站 */
+let last=null;
+for(const s of STEPS){
+ const here=[PL[s.at].lon,PL[s.at].lat];
+ if(s.from===null){s.seg=null}
+ else{s.seg=[last,...s.from,here]}
+ if(s.from!==null)last=here; else if(!last)last=here;
+}
+
+/* ---------- 鏡頭 ---------- */
+let vb={x:0,y:0,w:W,h:H},anim=null;
+function setVB(v){svg.setAttribute("viewBox",`${v.x} ${v.y} ${v.w} ${v.h}`);
+ const k=v.w/Math.max(svg.clientWidth,1);svg.style.setProperty("--k",k.toFixed(4));
+ const r=k;for(const id in PL){PL[id].dot.setAttribute("r",(5*r).toFixed(2))}for(const d of ctxDots)d.setAttribute("r",(2.6*r).toFixed(2));halo.setAttribute("r",(12*r).toFixed(2))}
+function fit(points,pad){
+ let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;for(const p of points){const x=X(p[0]),y=Y(p[1]);x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y)}
+ const cw=svg.clientWidth||1,ch=svg.clientHeight||1,aspect=cw/ch;
+ let w=Math.max(x1-x0,180)+pad*2,h=Math.max(y1-y0,140)+pad*2;
+ if(w/h<aspect)w=h*aspect;else h=w/aspect;
+ return{x:(x0+x1)/2-w/2,y:(y0+y1)/2-h/2,w,h}}
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function moveTo(target){if(reduce){vb=target;setVB(vb);return}
+ const from={...vb},t0=performance.now();
+ anim=target;const step=now=>{if(anim!==target)return;let t=Math.min(1,(now-t0)/700);t=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  vb={x:from.x+(target.x-from.x)*t,y:from.y+(target.y-from.y)*t,w:from.w+(target.w-from.w)*t,h:from.h+(target.h-from.h)*t};setVB(vb);
+  if(t<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+
+/* ---------- 顯示某一站 ---------- */
+let cur=0,overview=false,drawAnim=null;
+const dotsBox=document.getElementById("dots");
+STEPS.forEach((s,i)=>{const b=document.createElement("button");b.type="button";b.textContent=i+1;b.setAttribute("aria-label",`第 ${i+1} 站：${s.title}`);
+ b.addEventListener("click",()=>show(i));dotsBox.appendChild(b)});
+
+function pathD(segs){return segs.map(s=>smooth(s)).join(" ")}
+function show(i){
+ cur=i;overview=false;const s=STEPS[i],p=PL[s.at];
+ // 已走過的路線
+ const past=STEPS.slice(0,i).filter(q=>q.seg).map(q=>q.seg);
+ routePast.setAttribute("d",past.length?pathD(past):"");
+ // 本站路線（逐步畫出）
+ cancelAnimationFrame(drawAnim);
+ if(s.seg){
+  const full=s.seg;
+  if(reduce){routeCur.setAttribute("d",smooth(full))}
+  else{const t0=performance.now();const tick=now=>{const t=Math.min(1,(now-t0)/900);routeCur.setAttribute("d",smooth(partial(full,t)));if(t<1)drawAnim=requestAnimationFrame(tick)};drawAnim=requestAnimationFrame(tick)}
+ }else routeCur.setAttribute("d","");
+ // 支線
+ sideLayer.innerHTML="";
+ for(const sd of s.sides||[]){el("path",{d:smooth(sd.pts),class:"side "+sd.kind},sideLayer);
+  const t=el("text",{x:X(sd.at[0]),y:Y(sd.at[1]),class:"slabel "+sd.kind,"text-anchor":"middle"},sideLayer);t.textContent=sd.label}
+ // 地點狀態
+ const visited=new Set(STEPS.slice(0,i+1).map(q=>q.at));
+ for(const id in PL){PL[id].dot.setAttribute("class","dot"+(visited.has(id)?" visited":""));PL[id].label.setAttribute("class","plabel"+(id===s.at?" on":""))}
+ halo.setAttribute("cx",X(p.lon));halo.setAttribute("cy",Y(p.lat));
+ // 鏡頭
+ const focus=[[p.lon,p.lat],...(s.seg||[]),...(s.sides||[]).flatMap(q=>q.pts)];
+ moveTo(fit(focus,90));
+ // 資訊卡
+ const card=document.getElementById("card");
+ card.innerHTML=`<p class="num">第 ${i+1} 站，共 ${STEPS.length} 站</p><h2></h2><p class="where"><b></b>　今 <span></span></p>
+  <dl><dt>遭遇</dt><dd class="ppl"></dd><dt>經過</dt><dd class="what"></dd><dt>結果</dt><dd class="res"></dd></dl><p class="aside"></p>`;
+ card.querySelector("h2").textContent=s.title;card.querySelector(".where b").textContent=p.n;card.querySelector(".where span").textContent=p.now;
+ const ppl=card.querySelector(".ppl");for(const w of s.who){const e=document.createElement("span");e.className="p "+w[1];e.textContent=w[0];ppl.appendChild(e)}
+ card.querySelector(".what").textContent=s.what;card.querySelector(".res").textContent=s.result;
+ const as=card.querySelector(".aside");as.textContent=s.aside;as.hidden=!s.aside;
+ card.scrollTop=0;
+ [...dotsBox.children].forEach((b,j)=>{b.className=j<i?"done":j===i?"cur":"";b.setAttribute("aria-current",j===i?"step":"false")});
+ document.getElementById("prev").disabled=i===0;
+ const nx=document.getElementById("next");nx.disabled=i===STEPS.length-1;
+}
+function partial(a,t){ // 取折線前 t 比例
+ const P=a.map(q=>[X(q[0]),Y(q[1])]);let L=0;const seg=[];for(let k=0;k<P.length-1;k++){const d=Math.hypot(P[k+1][0]-P[k][0],P[k+1][1]-P[k][1]);seg.push(d);L+=d}
+ let need=L*t;const out=[a[0]];for(let k=0;k<seg.length;k++){if(need>=seg[k]){out.push(a[k+1]);need-=seg[k]}else{const f=seg[k]?need/seg[k]:0;out.push([a[k][0]+(a[k+1][0]-a[k][0])*f,a[k][1]+(a[k+1][1]-a[k][1])*f]);break}}
+ return out}
+
+function showAll(){
+ overview=true;cancelAnimationFrame(drawAnim);
+ routePast.setAttribute("d",pathD(STEPS.filter(q=>q.seg).map(q=>q.seg)));routeCur.setAttribute("d","");sideLayer.innerHTML="";
+ for(const id in PL){PL[id].dot.setAttribute("class","dot visited");PL[id].label.setAttribute("class","plabel")}
+ halo.setAttribute("cx",-999);
+ moveTo(fit(Object.values(PL).map(p=>[p.lon,p.lat]),50));
+}
+document.getElementById("prev").addEventListener("click",()=>show(Math.max(0,cur-1)));
+document.getElementById("next").addEventListener("click",()=>show(Math.min(STEPS.length-1,overview?cur:cur+1)));
+document.getElementById("allBtn").addEventListener("click",showAll);
+addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(Math.min(STEPS.length-1,cur+1));if(e.key==="ArrowLeft")show(Math.max(0,cur-1))});
+addEventListener("resize",()=>{if(overview)showAll();else{const s=STEPS[cur],p=PL[s.at];vb=fit([[p.lon,p.lat],...(s.seg||[]),...(s.sides||[]).flatMap(q=>q.pts)],70);setVB(vb)}});
+// 起始
+vb=fit(Object.values(PL).map(p=>[p.lon,p.lat]),50);setVB(vb);
+requestAnimationFrame(()=>show(0));
+if(document.fonts)document.fonts.ready.then(()=>setVB(vb));
+</script>
+</body>
+</html>
